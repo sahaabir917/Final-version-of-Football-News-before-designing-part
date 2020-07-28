@@ -2,13 +2,10 @@ package com.example.android.marsrealestate.Details
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
-
+import androidx.fragment.app.Fragment
 import com.example.android.marsrealestate.R
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -37,8 +34,15 @@ class DetailsFragment : Fragment() {
 
         webviews.loadUrl(index.toString())
         webviews.settings.javaScriptEnabled = true
-        Log.d("data is passed", index)
 
+        webviews.webViewClient = WebViewClient()
+        webviews.canGoBack()
+        webviews.setOnKeyListener(View.OnKeyListener{ v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == MotionEvent.ACTION_UP && webviews.canGoBack()){
+             webviews.goBack()
+               return@OnKeyListener true
+            }
+            false
+        })
     }
-
 }
