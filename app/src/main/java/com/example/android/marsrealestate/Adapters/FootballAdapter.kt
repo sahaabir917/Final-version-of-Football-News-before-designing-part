@@ -10,25 +10,33 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.network.FootballData
-import com.example.android.marsrealestate.network.FootballList
 import kotlinx.android.synthetic.main.grid_view_item.view.*
+import kotlinx.android.synthetic.main.grid_view_item_2.view.*
+
 
 class FootballAdapter() :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    lateinit var context: Context
+   lateinit var context: Context
     lateinit var footballdata: MutableList<FootballData>
     val contentview: Int = 0
     val Adviews: Int = 1
+    val contentview1 = 2
 
     init {
         footballdata = mutableListOf<FootballData>()
+
     }
 
     class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(footballData: FootballData) {
             itemView.bodies.text = footballData.body.toString()
             itemView.id_number.text = footballData.id.toString()
-            itemView.published_at.text = footballData.publishedAt.toString()
+            itemView.sharebutton.setOnClickListener{
+
+            }
+            var published_date : String = footballData.publishedAt.toString()
+            itemView.published_at.text = "Published At : " + published_date.dropLast(16)
+
         }
     }
 
@@ -38,25 +46,54 @@ class FootballAdapter() :
         }
     }
 
+    class Contentview1(itemView: View) : RecyclerView.ViewHolder(itemView){
+        fun bind(footballData: FootballData){
+        itemView.bodies2.text = footballData.body.toString()
+            itemView.id_number2.text = footballData.id.toString()
+            var publisheddate : String = footballData.publishedAt.toString()
+            itemView.published_at2.text = publisheddate.dropLast(16)
+            itemView.cardview1.setBackgroundResource(R.drawable.download)
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
 
-        return if (position % 30 == 0) {
+        return if (position % 14 == 0) {
             Adviews
         } else {
-            contentview
+            if(position % 2  == 0){
+                contentview
+            }
+            else{
+                contentview1
+            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        if (viewType == contentview) {
-            val view =
+
+        return when(viewType) {
+            contentview ->{
+                val view =
                     LayoutInflater.from(parent.context).inflate(R.layout.grid_view_item, parent, false)
-            return ContentViewHolder(view)
-        } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.adbanner, parent, false)
-            return AdviewHolder(view)
+             ContentViewHolder(view) }
+
+            Adviews -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.adbanner, parent, false)
+                 AdviewHolder(view)
+            }
+
+            contentview1 -> {
+                val view  = LayoutInflater.from(parent.context).inflate(R.layout.grid_view_item_2,parent,false)
+                Contentview1(view)
+            }
+
+            else -> throw IllegalArgumentException("Invalid view type")
         }
+
+
     }
 
     override fun getItemCount() = footballdata.size
@@ -77,10 +114,22 @@ class FootballAdapter() :
         if (getItemViewType(position) == Adviews) {
             (holder as AdviewHolder).bind()
         }
+
+        if(getItemViewType(position) == contentview1){
+            (holder as Contentview1).bind(footballdata[position])
+            holder.itemView.setOnClickListener { view: View ->
+                val mArgs = Bundle()
+                Log.d("argument will passed", footballdata[position].source)
+                mArgs.putString("Key", footballdata[position].source.toString())
+                view.findNavController()
+                        .navigate(R.id.action_overviewFragment_to_detailsFragment, mArgs)
+            }
+        }
     }
 
     public fun addFootballData(footballDataList: List<FootballData>) {
         this.footballdata.addAll(footballDataList)
     }
+
 }
 

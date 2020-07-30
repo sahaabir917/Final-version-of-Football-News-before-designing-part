@@ -41,6 +41,7 @@ class OverviewViewModel : ViewModel() {
     private val _status = MutableLiveData<String>()
     var totalpages: Int = 0
     var pageId : Int = 1
+    val pagesize = 20
 
     val status: LiveData<String>
         get() = _status
@@ -61,9 +62,10 @@ class OverviewViewModel : ViewModel() {
 
     private fun getFootballProperties() {
 
-        FootballApi.retrofitService.getdata(100, pageId).enqueue(object : retrofit2.Callback<FootballList> {
+        FootballApi.retrofitService.getdata(pagesize, pageId).enqueue(object : retrofit2.Callback<FootballList> {
             override fun onFailure(call: Call<FootballList>, t: Throwable) {
                 Log.d("data retrive failed", "failed to retrive")
+                getFootballProperties()
             }
 
             override fun onResponse(call: Call<FootballList>, response: Response<FootballList>) {
@@ -76,7 +78,7 @@ class OverviewViewModel : ViewModel() {
 
     fun retrofitcalling(pageid: Int) {
 
-        FootballApi.retrofitService.getdata(100, pageid).enqueue(object : Callback<FootballList> {
+        FootballApi.retrofitService.getdata(pagesize, pageid).enqueue(object : Callback<FootballList> {
             override fun onFailure(call: Call<FootballList>, t: Throwable) {
                 Log.d("Abir", "Failed to retrive")
                 pageId--

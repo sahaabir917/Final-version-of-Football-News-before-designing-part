@@ -1,10 +1,12 @@
 package com.example.android.marsrealestate.Details
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.example.android.marsrealestate.R
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -44,5 +46,37 @@ class DetailsFragment : Fragment() {
             }
             false
         })
+
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.shareingicon,menu)
+
+            if(null == getShareIntent().resolveActivity(activity!!.packageManager)){
+                menu?.findItem(R.id.shareicon)?.setVisible(false)
+            }
+    }
+
+    private fun getShareIntent() : Intent{
+        var args = getArguments()
+        var index = args!!.getString("Key","Not passed any data ")
+        return ShareCompat.IntentBuilder.from(activity)
+                .setText(index)
+                .setType("text/plain")
+                .intent
+    }
+
+    private fun ShareSuccess(){
+        startActivity(getShareIntent())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+       when(item!!.itemId){
+           R.id.shareicon -> ShareSuccess()
+       }
+        return super.onOptionsItemSelected(item)
     }
 }

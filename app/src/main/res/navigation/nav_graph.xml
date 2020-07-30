@@ -26,16 +26,23 @@
     <fragment
         android:id="@+id/overviewFragment"
         android:name="com.example.android.marsrealestate.overview.OverviewFragment"
-        android:label="fragment_overview"
+        android:label="Football News"
         tools:layout="@layout/fragment_overview" >
         <action
             android:id="@+id/action_overviewFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/overviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.android.marsrealestate.Details.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        android:label="Football News"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment"
+            app:popUpTo="@id/overviewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

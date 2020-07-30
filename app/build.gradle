@@ -87,7 +87,7 @@ dependencies {
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     implementation project(':nativetemplates')
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation "androidx.cardview:cardview:1.0.0"
 }
