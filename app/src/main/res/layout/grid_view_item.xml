@@ -44,10 +44,10 @@
                 android:paddingBottom="20dp">
 
                 <ImageView
+                    android:id="@+id/imageview1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/download"/>
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/bodies"

@@ -10,33 +10,35 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.network.FootballData
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.grid_view_item.view.*
 import kotlinx.android.synthetic.main.grid_view_item_2.view.*
 
 
-class FootballAdapter() :
+class FootballAdapter(listener:OnFootballItemClickListerner) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-   lateinit var context: Context
     lateinit var footballdata: MutableList<FootballData>
     val contentview: Int = 0
     val Adviews: Int = 1
     val contentview1 = 2
+    var onFootballItemClickListerner:OnFootballItemClickListerner? = null
+
 
     init {
         footballdata = mutableListOf<FootballData>()
-
+        this.onFootballItemClickListerner = listener
     }
 
-    class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ContentViewHolder(itemView: View, val listener: OnFootballItemClickListerner) : RecyclerView.ViewHolder(itemView) {
         fun bind(footballData: FootballData) {
             itemView.bodies.text = footballData.body.toString()
             itemView.id_number.text = footballData.id.toString()
-            itemView.sharebutton.setOnClickListener{
-
+            itemView.sharebutton.setOnClickListener{view->
+                listener.onShareBtnClick(view,footballData.source)
             }
             var published_date : String = footballData.publishedAt.toString()
             itemView.published_at.text = "Published At : " + published_date.dropLast(16)
-
+            Picasso.get().load("https://thesportsrush.com/wp-content/uploads/2019/09/GettyImages-1157821332.jpg").into(itemView.imageview1)
         }
     }
 
@@ -48,11 +50,10 @@ class FootballAdapter() :
 
     class Contentview1(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(footballData: FootballData){
-        itemView.bodies2.text = footballData.body.toString()
+            itemView.bodies2.text = footballData.body.toString()
             itemView.id_number2.text = footballData.id.toString()
             var publisheddate : String = footballData.publishedAt.toString()
             itemView.published_at2.text = publisheddate.dropLast(16)
-            itemView.cardview1.setBackgroundResource(R.drawable.download)
         }
     }
 
@@ -77,12 +78,12 @@ class FootballAdapter() :
         return when(viewType) {
             contentview ->{
                 val view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.grid_view_item, parent, false)
-             ContentViewHolder(view) }
+                        LayoutInflater.from(parent.context).inflate(R.layout.grid_view_item, parent, false)
+                ContentViewHolder(view, onFootballItemClickListerner!!) }
 
             Adviews -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.adbanner, parent, false)
-                 AdviewHolder(view)
+                AdviewHolder(view)
             }
 
             contentview1 -> {
@@ -103,11 +104,7 @@ class FootballAdapter() :
         if (getItemViewType(position) == contentview) {
             (holder as ContentViewHolder).bind(footballdata[position])
             holder.itemView.setOnClickListener { view: View ->
-                val mArgs = Bundle()
-                Log.d("argument will passed", footballdata[position].source)
-                mArgs.putString("Key", footballdata[position].source.toString())
-                view.findNavController()
-                        .navigate(R.id.action_overviewFragment_to_detailsFragment, mArgs)
+                onFootballItemClickListerner!!.onClickItemClick(view, footballdata[position].source)
             }
         }
 
@@ -118,11 +115,7 @@ class FootballAdapter() :
         if(getItemViewType(position) == contentview1){
             (holder as Contentview1).bind(footballdata[position])
             holder.itemView.setOnClickListener { view: View ->
-                val mArgs = Bundle()
-                Log.d("argument will passed", footballdata[position].source)
-                mArgs.putString("Key", footballdata[position].source.toString())
-                view.findNavController()
-                        .navigate(R.id.action_overviewFragment_to_detailsFragment, mArgs)
+                onFootballItemClickListerner!!.onClickItemClick(view, footballdata[position].source)
             }
         }
     }
@@ -131,5 +124,8 @@ class FootballAdapter() :
         this.footballdata.addAll(footballDataList)
     }
 
+    interface OnFootballItemClickListerner{
+        fun onClickItemClick(view:View,source : String)
+        fun onShareBtnClick(view:View, url:String)
+    }
 }
-

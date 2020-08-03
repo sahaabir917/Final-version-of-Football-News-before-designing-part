@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.Adapters.FootballAdapter
@@ -79,7 +80,18 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        adapter = FootballAdapter()
+        adapter = FootballAdapter(object : FootballAdapter.OnFootballItemClickListerner{
+            override  fun onClickItemClick(view:View,source : String){
+                val mArgs = Bundle()
+                Log.d("argument will passed", source)
+                mArgs.putString("Key", source)
+                view.findNavController()
+                        .navigate(R.id.action_overviewFragment_to_detailsFragment, mArgs)
+            }
+            override  fun onShareBtnClick(view:View, url:String){
+
+            }
+        })
         binding.recyclerview.adapter = adapter
         binding.recyclerview.setHasFixedSize(true)
 
