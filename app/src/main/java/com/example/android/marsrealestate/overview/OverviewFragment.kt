@@ -17,6 +17,7 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -89,7 +90,14 @@ class OverviewFragment : Fragment() {
                         .navigate(R.id.action_overviewFragment_to_detailsFragment, mArgs)
             }
             override  fun onShareBtnClick(view:View, url:String){
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, url)
+                    type = "text/plain"
+                }
 
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
             }
         })
         binding.recyclerview.adapter = adapter

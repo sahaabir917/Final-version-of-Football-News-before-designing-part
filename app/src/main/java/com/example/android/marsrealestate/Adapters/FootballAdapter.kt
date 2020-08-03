@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.R
@@ -48,12 +49,15 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
         }
     }
 
-    class Contentview1(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class Contentview1(itemView: View, val listener: OnFootballItemClickListerner) : RecyclerView.ViewHolder(itemView){
         fun bind(footballData: FootballData){
             itemView.bodies2.text = footballData.body.toString()
             itemView.id_number2.text = footballData.id.toString()
             var publisheddate : String = footballData.publishedAt.toString()
             itemView.published_at2.text = publisheddate.dropLast(16)
+            itemView.sharebutton1.setOnClickListener{view->
+                listener.onShareBtnClick(view,footballData.source)
+            }
         }
     }
 
@@ -88,7 +92,7 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
 
             contentview1 -> {
                 val view  = LayoutInflater.from(parent.context).inflate(R.layout.grid_view_item_2,parent,false)
-                Contentview1(view)
+                Contentview1(view,onFootballItemClickListerner!!)
             }
 
             else -> throw IllegalArgumentException("Invalid view type")
