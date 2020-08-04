@@ -17,6 +17,7 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,7 +42,7 @@ class OverviewViewModel : ViewModel() {
     private val _status = MutableLiveData<String>()
     var totalpages: Int = 0
     var pageId : Int = 1
-    val pagesize = 20
+    val pagesize = 15
 
     val status: LiveData<String>
         get() = _status
@@ -62,7 +63,14 @@ class OverviewViewModel : ViewModel() {
 
     private fun getFootballProperties() {
 
-        FootballApi.retrofitService.getdata(pagesize, pageId).enqueue(object : retrofit2.Callback<FootballList> {
+       var  username : String = "D4CFDE0CDD141AA"
+        var password : String = "AD743A46C3C"
+
+        var base : String  = "$username:$password"
+
+        var authHeader : String = "Basic " + Base64.encodeToString(base.toByteArray(),Base64.NO_WRAP)
+
+        FootballApi.retrofitService.getdata(pagesize, pageId,authHeader).enqueue(object : retrofit2.Callback<FootballList> {
             override fun onFailure(call: Call<FootballList>, t: Throwable) {
                 Log.d("data retrive failed", "failed to retrive")
                 getFootballProperties()
@@ -77,8 +85,14 @@ class OverviewViewModel : ViewModel() {
 
 
     fun retrofitcalling(pageid: Int) {
+        var  username : String = "D4CFDE0CDD141AA"
+        var password : String = "AD743A46C3C"
 
-        FootballApi.retrofitService.getdata(pagesize, pageid).enqueue(object : Callback<FootballList> {
+        var base : String  = "$username:$password"
+
+        var authHeader : String = "Basic " + Base64.encodeToString(base.toByteArray(),Base64.NO_WRAP)
+
+        FootballApi.retrofitService.getdata(pagesize, pageid,authHeader).enqueue(object : Callback<FootballList> {
             override fun onFailure(call: Call<FootballList>, t: Throwable) {
                 Log.d("Abir", "Failed to retrive")
                 pageId--

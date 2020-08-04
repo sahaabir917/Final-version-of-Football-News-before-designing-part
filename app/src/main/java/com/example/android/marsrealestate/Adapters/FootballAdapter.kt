@@ -39,7 +39,7 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
             }
             var published_date : String = footballData.publishedAt.toString()
             itemView.published_at.text = "Published At : " + published_date.dropLast(16)
-            Picasso.get().load("https://thesportsrush.com/wp-content/uploads/2019/09/GettyImages-1157821332.jpg").into(itemView.imageview1)
+            Picasso.get().load(footballData.image).into(itemView.imageview1)
         }
     }
 
