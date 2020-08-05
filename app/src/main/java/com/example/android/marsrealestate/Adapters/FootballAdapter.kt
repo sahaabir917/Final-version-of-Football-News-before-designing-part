@@ -38,7 +38,7 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
                 listener.onShareBtnClick(view,footballData.source)
             }
             var published_date : String = footballData.publishedAt.toString()
-            itemView.published_at.text = "Published At : " + published_date.dropLast(16)
+            itemView.published_at.text =  published_date.dropLast(8)
             Picasso.get().load(footballData.image).into(itemView.imageview1)
         }
     }
@@ -54,10 +54,12 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
             itemView.bodies2.text = footballData.body.toString()
             itemView.id_number2.text = footballData.id.toString()
             var publisheddate : String = footballData.publishedAt.toString()
-            itemView.published_at2.text = publisheddate.dropLast(16)
+            itemView.published_at2.text = publisheddate.dropLast(8)
             itemView.sharebutton1.setOnClickListener{view->
                 listener.onShareBtnClick(view,footballData.source)
             }
+            Picasso.get().load(footballData.image).into(itemView.imageview2)
+
         }
     }
 
