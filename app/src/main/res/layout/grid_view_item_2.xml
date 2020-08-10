@@ -18,10 +18,10 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
+            android:layout_height="320dp"
+            app:cardCornerRadius="5dp"
             android:id="@+id/cardview1"
-            android:layout_margin="20dp">
+            android:layout_margin="10dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingBottom="20dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/bodies2"
@@ -47,7 +47,7 @@
                     android:textAlignment="center"
                     android:textColor="#2D302F"
                     android:background="#99F1ECEC"
-                    android:textSize="15dp"
+                    android:textSize="13sp"
                     android:textStyle="bold|italic" />
 
                 <View
@@ -69,15 +69,15 @@
                         android:layout_height="30dp"
                         android:background="@drawable/share"/>
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/id_number2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:padding="5dp"-->
-<!--                        android:text=""-->
-<!--                        android:textColor="#2D302F"-->
-<!--                        android:background="#99F1ECEC"-->
-<!--                        android:textSize="8dp" />-->
+                    <TextView
+                        android:id="@+id/id_number2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text=""
+                        android:textColor="#2D302F"
+                        android:background="#99F1ECEC"
+                        android:textSize="8dp" />
 
                     <TextView
                         android:id="@+id/published_at2"

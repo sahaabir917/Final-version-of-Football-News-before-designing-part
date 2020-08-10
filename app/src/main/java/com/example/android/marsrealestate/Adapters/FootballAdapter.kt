@@ -38,6 +38,7 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
             }
             var published_date : String = footballData.publishedAt.toString()
             itemView.published_at.text =  published_date.dropLast(8)
+            itemView.id_number.text = footballData.id.toString()
             Picasso.get().load(footballData.image).into(itemView.imageview1)
         }
     }
@@ -56,6 +57,7 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
             itemView.sharebutton1.setOnClickListener{view->
                 listener.onShareBtnClick(view,footballData.source)
             }
+            itemView.id_number2.text = footballData.id.toString()
             Picasso.get().load(footballData.image).into(itemView.imageview2)
 
         }
@@ -125,6 +127,11 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
     }
 
     public fun addFootballData(footballDataList: List<FootballData>) {
+       this.footballdata.addAll(footballDataList)
+    }
+
+    public fun addalldata(footballDataList: List<FootballData>){
+        this.footballdata.clear()
         this.footballdata.addAll(footballDataList)
     }
 

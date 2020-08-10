@@ -109,9 +109,24 @@ class OverviewFragment : Fragment() {
             d("the total number of pages is", Footballist.page.totalPages.toString())
         })
 
+        viewModel.newproperties.observe(this, Observer {Footballist->
+            Showalldatas(Footballist)
+            totalpages = Footballist.page.totalPages
+            d("the total number of pages is", Footballist.page.totalPages.toString())
+        })
+
 
         layoutManager = LinearLayoutManager(activity)
         binding.recyclerview.layoutManager = layoutManager
+
+
+        binding.swipe.setOnRefreshListener{
+
+
+            viewModel.cleardata(1)
+            pageid = 1
+            swipe.isRefreshing = false
+        }
 
 
         binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -144,6 +159,12 @@ class OverviewFragment : Fragment() {
     private fun Showalldata(footballist: FootballList) {
         adapter.addFootballData(footballist.data)
         d("total adapter is - ", adapter.footballdata.size.toString())
+        adapter.notifyDataSetChanged()
+    }
+
+
+    private fun Showalldatas(footballist: FootballList){
+        adapter.addalldata(footballist.data)
         adapter.notifyDataSetChanged()
     }
 

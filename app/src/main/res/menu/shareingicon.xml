@@ -9,5 +9,4 @@
         android:title="share"
         android:visible="true"
         app:showAsAction="always"/>
-
 </menu>

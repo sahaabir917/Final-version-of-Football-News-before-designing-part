@@ -25,10 +25,6 @@ import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.Adapters.FootballAdapter
 import com.example.android.marsrealestate.network.FootballApi
 import com.example.android.marsrealestate.network.FootballList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +38,7 @@ class OverviewViewModel : ViewModel() {
     private val _status = MutableLiveData<String>()
     var totalpages: Int = 0
     var pageId : Int = 1
-    val pagesize = 15
+    val pagesize = 20
 
     val status: LiveData<String>
         get() = _status
@@ -50,20 +46,21 @@ class OverviewViewModel : ViewModel() {
     lateinit var adapter: FootballAdapter
     var totalpage : Int = 0
     var  i : Int =1
-
+    var j : Int  = 1
     private val _properties = MutableLiveData<FootballList>()
     val properties : LiveData<FootballList>
         get() = _properties
 
+    private val _newproperties = MutableLiveData<FootballList>()
+    val newproperties : LiveData<FootballList>
+        get() = _newproperties
 
     init {
         getFootballProperties()
     }
 
-
     private fun getFootballProperties() {
-
-       var  username : String = "D4CFDE0CDD141AA"
+        var  username : String = "D4CFDE0CDD141AA"
         var password : String = "AD743A46C3C"
 
         var base : String  = "$username:$password"
@@ -103,6 +100,31 @@ class OverviewViewModel : ViewModel() {
                 i++
                 Log.d("Abir", "responsed" + i.toString())
                 _properties.value = response.body()!!
+                totalpages = response.body()!!.page.totalPages
+            }
+        })
+    }
+
+
+    fun cleardata(pageid: Int){
+        var  username : String = "D4CFDE0CDD141AA"
+        var password : String = "AD743A46C3C"
+
+        var base : String  = "$username:$password"
+
+        var authHeader : String = "Basic " + Base64.encodeToString(base.toByteArray(),Base64.NO_WRAP)
+
+        FootballApi.retrofitService.getdata(pagesize, pageid,authHeader).enqueue(object : Callback<FootballList> {
+            override fun onFailure(call: Call<FootballList>, t: Throwable) {
+                Log.d("Abir", "Failed to retrive")
+                pageId--
+                Log.d("after fail to retrive data ", "pageid = $pageid")
+            }
+
+            override fun onResponse(call: Call<FootballList>, response: Response<FootballList>) {
+                j++
+                Log.d("Abir", "responsed" + j.toString())
+                _newproperties.value = response.body()!!
                 totalpages = response.body()!!.page.totalPages
             }
         })

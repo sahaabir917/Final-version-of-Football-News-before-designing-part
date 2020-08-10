@@ -41,6 +41,7 @@
         <action
             android:id="@+id/action_detailsFragment_to_overviewFragment"
             app:destination="@id/overviewFragment"
+            app:launchSingleTop="false"
             app:popUpTo="@id/overviewFragment"
             app:popUpToInclusive="true" />
     </fragment>
