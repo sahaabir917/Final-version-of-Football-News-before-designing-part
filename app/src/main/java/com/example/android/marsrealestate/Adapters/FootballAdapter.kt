@@ -33,7 +33,6 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
     class ContentViewHolder(itemView: View, val listener: OnFootballItemClickListerner) : RecyclerView.ViewHolder(itemView) {
         fun bind(footballData: FootballData) {
             itemView.bodies.text = footballData.body.toString()
-            itemView.id_number.text = footballData.id.toString()
             itemView.sharebutton.setOnClickListener{view->
                 listener.onShareBtnClick(view,footballData.source)
             }
@@ -52,7 +51,6 @@ class FootballAdapter(listener:OnFootballItemClickListerner) :
     class Contentview1(itemView: View, val listener: OnFootballItemClickListerner) : RecyclerView.ViewHolder(itemView){
         fun bind(footballData: FootballData){
             itemView.bodies2.text = footballData.body.toString()
-            itemView.id_number2.text = footballData.id.toString()
             var publisheddate : String = footballData.publishedAt.toString()
             itemView.published_at2.text = publisheddate.dropLast(8)
             itemView.sharebutton1.setOnClickListener{view->

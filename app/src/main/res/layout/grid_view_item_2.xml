@@ -69,15 +69,15 @@
                         android:layout_height="30dp"
                         android:background="@drawable/share"/>
 
-                    <TextView
-                        android:id="@+id/id_number2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=""
-                        android:textColor="#2D302F"
-                        android:background="#99F1ECEC"
-                        android:textSize="8dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/id_number2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text=""-->
+<!--                        android:textColor="#2D302F"-->
+<!--                        android:background="#99F1ECEC"-->
+<!--                        android:textSize="8dp" />-->
 
                     <TextView
                         android:id="@+id/published_at2"

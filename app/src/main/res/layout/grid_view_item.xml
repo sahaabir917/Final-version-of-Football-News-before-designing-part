@@ -46,7 +46,7 @@
                 <ImageView
                     android:id="@+id/imageview1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -80,13 +80,13 @@
                     android:layout_height="30dp"
                     android:background="@drawable/share"/>
 
-                    <TextView
-                        android:id="@+id/id_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="100"
-                        android:textSize="8dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/id_number"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="100"-->
+<!--                        android:textSize="8dp" />-->
 
 
                     <TextView
