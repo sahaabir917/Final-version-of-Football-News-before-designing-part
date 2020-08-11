@@ -28,10 +28,9 @@
     
     <style name="customappbar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">#EDE7E7</item>
     </style>
 
-    <style name="menuitems" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@color/gnt_white</item>
-    </style>
+
 
 </resources>
